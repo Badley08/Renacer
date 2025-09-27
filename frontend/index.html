@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Renacer EDU - Plataforma educativa">
+    <meta name="theme-color" content="#4F46E5">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+    <title>Renacer EDU</title>
+</head>
+<body>
+    <div class="container" id="app">
+        <!-- Página de Inicio -->
+        <div id="homePage" class="page active">
+            <div class="header">
+                <h1>🌱 Renacer EDU</h1>
+                <div class="header-actions" id="headerActions"></div>
+            </div>
+            <div id="homeContent"></div>
+        </div>
+
+        <!-- Página de Registro -->
+        <div id="registerPage" class="page">
+            <div class="center-page">
+                <div class="card welcome-card">
+                    <h2 style="margin-bottom: 20px; font-size: 28px; text-align: center;">Registro</h2>
+                    <div id="registerAlert"></div>
+                    <div class="form-group">
+                        <label>Nombre Completo</label>
+                        <input type="text" id="regName" class="form-control" placeholder="Tu nombre">
+                    </div>
+                    <div class="form-group">
+                        <label>Correo Electrónico</label>
+                        <input type="email" id="regEmail" class="form-control" placeholder="tu@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Contraseña</label>
+                        <input type="password" id="regPassword" class="form-control" placeholder="Mínimo 6 caracteres">
+                    </div>
+                    <button onclick="register()" class="btn btn-success" style="width: 100%; margin-bottom: 10px;">Registrarse</button>
+                    <button onclick="showPage('homePage')" class="btn btn-secondary" style="width: 100%;">Volver</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Página de Login -->
+        <div id="loginPage" class="page">
+            <div class="center-page">
+                <div class="card welcome-card">
+                    <h2 style="margin-bottom: 20px; font-size: 28px; text-align: center;">Iniciar Sesión</h2>
+                    <div id="loginAlert"></div>
+                    <div class="form-group">
+                        <label>Correo Electrónico</label>
+                        <input type="email" id="loginEmail" class="form-control" placeholder="tu@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Contraseña</label>
+                        <input type="password" id="loginPassword" class="form-control" placeholder="Tu contraseña">
+                    </div>
+                    <button onclick="login()" class="btn btn-primary" style="width: 100%; margin-bottom: 10px;">Entrar</button>
+                    <button onclick="showPage('homePage')" class="btn btn-secondary" style="width: 100%;">Volver</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Página del Foro -->
+        <div id="forumPage" class="page">
+            <div class="header">
+                <h1>💬 Foro</h1>
+                <button onclick="showPage('homePage')" class="btn btn-secondary">Inicio</button>
+            </div>
+            <div class="card">
+                <button onclick="toggleNewPost()" class="btn btn-primary" style="width: 100%;">✍️ Nuevo Mensaje</button>
+                <div id="newPostForm" style="display: none; margin-top: 20px;">
+                    <div class="form-group">
+                        <input type="text" id="postTitle" class="form-control" placeholder="Título del mensaje">
+                    </div>
+                    <div class="form-group">
+                        <textarea id="postContent" class="form-control" placeholder="Escribe tu mensaje aquí..."></textarea>
+                    </div>
+                    <button onclick="createPost()" class="btn btn-success">Publicar</button>
+                </div>
+            </div>
+            <div id="forumPosts"></div>
+        </div>
+
+        <!-- Página de Educación -->
+        <div id="educationPage" class="page">
+            <div class="header">
+                <h1>📚 Educación</h1>
+                <button onclick="showPage('homePage')" class="btn btn-secondary">Inicio</button>
+            </div>
+            <div id="quizList" class="card-grid"></div>
+        </div>
+
+        <!-- Página de Quiz -->
+        <div id="quizPage" class="page">
+            <div class="center-page" style="width: 100%; max-width: 600px;">
+                <div class="card" style="width: 100%;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                        <h2 id="quizTitle"></h2>
+                        <span id="questionNumber"></span>
+                    </div>
+                    <div class="quiz-progress">
+                        <div class="quiz-progress-bar" id="quizProgress"></div>
+                    </div>
+                    <h3 id="questionText" style="margin-bottom: 20px; font-size: 20px;"></h3>
+                    <div id="quizOptions"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Página de Resultados -->
+        <div id="resultsPage" class="page">
+            <div class="center-page">
+                <div class="card welcome-card" style="text-align: center;">
+                    <div style="font-size: 64px; margin-bottom: 20px;">🏆</div>
+                    <h2 style="margin-bottom: 20px;">¡Quiz Completado!</h2>
+                    <div style="font-size: 48px; font-weight: 700; color: #10B981; margin-bottom: 10px;" id="finalScore"></div>
+                    <div style="font-size: 20px; color: #6B7280; margin-bottom: 30px;" id="finalPercentage"></div>
+                    <button onclick="showPage('educationPage')" class="btn btn-primary" style="width: 100%; margin-bottom: 10px;">Volver a Quiz</button>
+                    <button onclick="showPage('homePage')" class="btn btn-secondary" style="width: 100%;">Ir al Inicio</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Página de Perfil -->
+        <div id="profilePage" class="page">
+            <div class="header">
+                <h1>👤 Mi Perfil</h1>
+                <button onclick="showPage('homePage')" class="btn btn-secondary">Inicio</button>
+            </div>
+            <div class="card">
+                <div id="profileInfo"></div>
+                <div class="stats-grid" id="userStats"></div>
+                <button onclick="logout()" class="btn btn-danger" style="width: 100%; margin-top: 20px;">Cerrar Sesión</button>
+            </div>
+            <div class="card" id="quizResults"></div>
+        </div>
+
+        <!-- Panel de Administración -->
+        <div id="adminPage" class="page">
+            <div class="header">
+                <h1>⚙️ Panel de Administración</h1>
+                <button onclick="showPage('homePage')" class="btn btn-secondary">Inicio</button>
+            </div>
+            
+            <div class="card">
+                <h2 style="margin-bottom: 20px;">👥 Gestión de Usuarios</h2>
+                <div id="usersList"></div>
+            </div>
+
+            <div class="card">
+                <h2 style="margin-bottom: 20px;">📝 Gestión de Posts</h2>
+                <div id="adminPostsList"></div>
+            </div>
+
+            <div class="card">
+                <h2 style="margin-bottom: 20px;">📊 Estadísticas</h2>
+                <div class="stats-grid" id="adminStats"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
